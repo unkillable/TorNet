@@ -28,7 +28,7 @@ def receive(s,channel):
 			channel = channel[1].split(" :")
 			channel = channel[0].strip()
 			print channel
-			sData = data.split(" PRIVMSG "+channel+" :")[1].strip()
+			sData = msg.split(" PRIVMSG "+channel+" :")[1].strip()
 			if sData.startswith(".join "):
 				shit, channel = msg.split(".join ")   
 				s.send("JOIN " + channel + "\r\n")       
