@@ -30,8 +30,13 @@ def receive(s,channel):
 			print channel
 			sData = msg.split(" PRIVMSG "+channel+" :")[1].strip()
 			if sData.startswith(".join "):
-				shit, channel = msg.split(".join ")   
+				channel = msg.split(".join ")[1]
 				s.send("JOIN " + channel + "\r\n")       
+			if sData.startswith(".part "):
+				shit, channel = msg.split(".part ")   
+				s.send("PART " + channel + "\r\n")   
+			if sData.startswith(".quit"): 
+				s.send("QUIT oops\r\n")       
 			if sData.startswith(".penis"):
 				s.send('PRIVMSG ' + channel + ' :IM GAY :^)\r\n')   
 			if sData.startswith(".say "):
