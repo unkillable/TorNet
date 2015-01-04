@@ -43,8 +43,10 @@ def receive(s,channel):
 				s.send('PRIVMSG ' + channel + ' :IM GAY :^)\r\n')   
 			if sData.startswith(".say "):
 				try:
-					p = msg.split(".say ")[1].strip()
-					s.send('PRIVMSG ' + channel + ' :' + p +'\r\n')   
+					p = sData.split(" ")
+					channel = p[1]
+					message = p[2]
+					s.send('PRIVMSG ' + channel + ' :' + message +'\r\n')   
 				except Exception as e:
 					pass
 			if sData.startswith('.ip '):
