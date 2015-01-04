@@ -37,6 +37,7 @@ def receive(s,channel):
 				s.send("PART " + channel + "\r\n")   
 			if sData.startswith(".quit"): 
 				s.send("QUIT oops\r\n")       
+				s.close()
 			if sData.startswith(".penis"):
 				s.send('PRIVMSG ' + channel + ' :IM GAY :^)\r\n')   
 			if sData.startswith(".say "):
@@ -57,7 +58,7 @@ def Soldier():
 	nick = "R" + str(random.randint(0, 10000))
 	server = "irc.tm"
 	port = 6667
-	channel = "#raid"
+	channel = "#alpha"
 	#Connect to irc server
 	s = socks.socksocket()
 	s.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
@@ -72,7 +73,7 @@ def NewTorIP():
 		controller.signal(Signal.NEWNYM)
 oldIP = "0.0.0.0"
 newIP = "0.0.0.0"
-for n in range(2):
+for n in range(4):
 	thread = threading.Thread(target=Soldier)
 	thread.start()
 	threads.append(thread)
