@@ -38,6 +38,7 @@ def receive(s,channel):
 			if sData.startswith(".quit"): 
 				s.send("QUIT oops\r\n")       
 				s.close()
+				os._exit()
 			if sData.startswith(".penis"):
 				s.send('PRIVMSG ' + channel + ' :IM GAY :^)\r\n')   
 			if sData.startswith(".say "):
