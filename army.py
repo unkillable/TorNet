@@ -9,6 +9,7 @@ import random
 import threading
 import thread
 import time
+import string
 from stem import Signal
 from stem.control import Controller
 def receive(s,channel):
@@ -27,7 +28,6 @@ def receive(s,channel):
 			channel = msg.split("PRIVMSG ")
 			channel = channel[1].split(" :")
 			channel = channel[0].strip()
-			print channel
 			sData = msg.split(" PRIVMSG "+channel+" :")[1].strip()
 			if sData.startswith(".join "):
 				channel = msg.split(".join ")[1]
@@ -58,10 +58,10 @@ def receive(s,channel):
 				except(ValueError, socket.gaierror):	
 					s.send('PRIVMSG ' + channel + ' :Incorrect usage of command\r\n')
 def Soldier():
-	nick = "R" + str(random.randint(0, 10000))
+	nick = ''.join(random.choice(string.ascii_letters) for x in range(3)) + str(random.randint(0, 10000))
 	server = "irc.tm"
 	port = 6667
-	channel = "#alpha"
+	channel = "#Convention"
 	#Connect to irc server
 	s = socks.socksocket()
 	s.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
