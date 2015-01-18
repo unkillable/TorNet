@@ -117,7 +117,7 @@ def NewTorIP():
 
 def CommandCenter():
 	nick = "CommandCenter"
-	server = "irc.menthol.pw"
+	server = "irc.com"
 	port = 6667
 	channel = "#command"
 	#Connect to irc server
